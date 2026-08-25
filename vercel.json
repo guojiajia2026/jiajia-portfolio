@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/api/chat", "destination": "/api/chat" },
+    { "source": "/api/match", "destination": "/api/match" }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
+}

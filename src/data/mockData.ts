@@ -1,0 +1,595 @@
+import type {
+  UserProfile,
+  Skill,
+  StarterQuestion,
+  ChatMessage,
+  JourneyItem,
+  ProductCase,
+  ExperienceItem,
+} from '@/types'
+
+export const mockProfile: UserProfile = {
+  name: '郭佳佳',
+  title: 'AI Product Explorer',
+  education: '保险硕士',
+  school: 'Central University of Finance and Economics',
+  avatarUrl: '/assets/ip-character.png',
+  tags: [
+    {
+      icon: 'education',
+      label: 'Education',
+      value: '中央财经大学',
+      subValue: '保险硕士',
+    },
+    {
+      icon: 'award',
+      label: 'Ranking',
+      value: '4/51',
+      subValue: '专业排名',
+    },
+    {
+      icon: 'location',
+      label: 'Location',
+      value: '北京',
+    },
+    {
+      icon: 'sparkles',
+      label: 'Focus',
+      value: 'AI + 商业化',
+      subValue: '产品方向',
+    },
+  ],
+}
+
+export const mockSkills: Skill[] = [
+  {
+    id: 'business',
+    icon: '📊',
+    name: 'Business',
+    level: 5,
+    maxLevel: 7,
+    details: {
+      title: 'Business Analysis',
+      knowledge: ['行业研究', '商业分析', '财报分析', '专家访谈'],
+      projects: ['民生证券-天宇股份覆盖报告', '字节-广告收入归因分析'],
+    },
+  },
+  {
+    id: 'product',
+    icon: '📱',
+    name: 'Product',
+    level: 4,
+    maxLevel: 7,
+    details: {
+      title: 'Product Design',
+      knowledge: ['PRD撰写', '需求分析', '竞品分析', '用户调研'],
+      projects: ['快手-智能客服迭代', '小米-会员体系优化'],
+    },
+  },
+  {
+    id: 'ai',
+    icon: '🤖',
+    name: 'AI',
+    level: 3,
+    maxLevel: 7,
+    details: {
+      title: 'AI Capability',
+      knowledge: ['AI异常归因', 'AI图文生产链路', 'RAG架构理解'],
+      projects: ['字节-AI异常归因助手', '美团-AI图文管线看板'],
+    },
+  },
+  {
+    id: 'data',
+    icon: '📈',
+    name: 'Data',
+    level: 4,
+    maxLevel: 7,
+    details: {
+      title: 'Data Analysis',
+      knowledge: ['SQL', 'Python', '数据看板搭建', '指标体系设计'],
+      projects: ['美团-AI图文指标看板', '快手-拜访工具数据看板'],
+    },
+  },
+]
+
+export const mockExp = {
+  value: 65,
+  nextLevel: 'Agent Builder',
+  records: [
+    { label: 'AI项目实践', value: '+20' },
+    { label: '数据产品经验', value: '+15' },
+    { label: '商业分析', value: '+10' },
+  ],
+}
+
+export const mockStarterQuestions: StarterQuestion[] = [
+  { id: 'q1', title: '关于我', prompt: '介绍佳佳个人背景', category: 'profile' },
+  { id: 'q2', title: '经历', prompt: '佳佳的实习经历有哪些？', category: 'experience' },
+  { id: 'q3', title: '校园', prompt: '佳佳的校园经历是什么？', category: 'campus' },
+  { id: 'q4', title: 'AI能力', prompt: '佳佳的AI产品探索经历？', category: 'ai' },
+]
+
+export const mockChatMessages: ChatMessage[] = [
+  {
+    id: 'm1',
+    role: 'ai',
+    content: '你好，我是佳佳的AI数字分身 💕 有什么想了解的吗？',
+    timestamp: Date.now() - 60000,
+  },
+  {
+    id: 'm2',
+    role: 'user',
+    content: '你为什么想做产品经理？',
+    timestamp: Date.now() - 45000,
+  },
+  {
+    id: 'm3',
+    role: 'ai',
+    content:
+      '我的经历主要围绕商业分析和产品增长。从金融研究出发，我希望站在技术创新前沿，探索互联网公司如何通过产品、数据和AI能力创造新的商业价值。我希望成为一名连接业务、用户和技术的AI商业化产品经理。',
+    cards: [
+      {
+        type: 'experience',
+        title: 'Related Experience',
+        tags: ['字节-广告归因', '小米-增长分析'],
+        content: 'AI + 商业化产品方向',
+      },
+    ],
+    timestamp: Date.now() - 30000,
+  },
+]
+
+export const mockJourney: JourneyItem[] = [
+  { year: '2023', title: '金融研究', description: '民生证券 · 华泰证券 · 国金证券' },
+  { year: '2024', title: '产品探索', description: '快手 · 美团 · 小米 · 字节' },
+  { year: '2025', title: 'AI PM', description: 'AI产品探索与商业化方向' },
+]
+
+export const mockInternships = [
+  {
+    company: '字节跳动',
+    period: '2026.03 - 2026.07',
+    role: '数据产品实习生',
+    department: '中国电商-商家产品',
+    tags: ['数据产品', 'CRM', 'AI', 'PRD', '广告收入'],
+    description: 'CRM数据安全与迭代升级 + 广告收入分析与AI产品探索',
+    photo: '/assets/photo-intern-bytedance.jpg',
+    highlight: true,
+    projects: [
+      { name: 'AI问数/业绩追踪', detail: '提供"看数→AI解读→AI业绩报告"的业绩分析能力，帮小二快速锁定缺口。可省去业绩分析时长15分钟/次，准确率87.3%', tags: ['AI产品', '业绩分析', '广告收入'], caseId: 'case-bytedance-ai' },
+      { name: '达人数据安全管控', detail: '梳理4类角色权限边界，推动权限申请审批、敏感指标加敏、导出频控、风险预警4项核心机制设计与落地', tags: ['数据产品', 'CRM', '数据安全'], caseId: 'case-bytedance-data' },
+      { name: '核心作者实时开播盯盘', detail: '自动分组能力节省行业人力170小时/日，支持核心作者开播情况及投流表现实时监控', tags: ['产品迭代', '大促保障'], caseId: 'case-bytedance-live' },
+      { name: '广告收入分析', detail: '围绕广告收入归因输出1.5w字用户调研，设计多层级分析的广告收入板块PRD，销运广告数据使用率提升5pp', tags: ['商业分析', '广告收入', 'PRD'], caseId: 'case-bytedance-ad' },
+    ],
+  },
+  {
+    company: '小米',
+    period: '2025.10 - 2026.02',
+    role: '商业化实习生',
+    department: '可穿戴设备-软件',
+    tags: ['商业化', '会员体系', '竞品分析', '增长活动'],
+    description: '会员体系竞品调研与商业化增长活动策划',
+    photo: '/assets/photo-intern-xiaomi.jpg',
+    highlight: true,
+    projects: [
+      { name: '抖音支付合作项目', detail: '接入抖音支付并叠加立减活动，带动支付转化效率提升3%，支付页优惠点击率提升10%+', tags: ['商业化', '支付链路', '增长'], caseId: 'case-xiaomi-pay' },
+      { name: '亲友赠礼老带新活动', detail: '设计"亲友赠礼"机制串联4个核心转化节点，预计带动活动分享率提升8%，新用户首次权益体验转化率提升5%', tags: ['增长活动', '社交裂变', '会员'], caseId: 'case-xiaomi-gift' },
+      { name: '助眠音频内容引入', detail: '3阶段200首音频内容供给规划，"免费+VIP"分层模式，预计提升助眠内容使用时长10%~15%', tags: ['内容策略', '会员体系'], caseId: 'case-xiaomi-audio' },
+      { name: '会员体系竞品分析', detail: '基于81989份有效问卷数据，完成用户画像和功能诉求分析，确定会员核心权益方向', tags: ['竞品分析', '会员体系', '用户调研'], caseId: 'case-xiaomi-member' },
+    ],
+  },
+  {
+    company: '美团',
+    period: '2025.02 - 2025.06',
+    role: '策略产品实习生',
+    department: '视频产品中心',
+    tags: ['策略产品', 'AIGC', '内容链路', '数据看板'],
+    description: 'AIGC图文生产管线数据基建与策略优化',
+    photo: '/assets/photo-intern-meituan.jpg',
+    highlight: true,
+    projects: [
+      { name: 'AIGC数据折损看板', detail: '从0到1搭建AIGC数据折损看板，定义5个核心指标和两个漏斗视图，结束团队"盲跑"状态', tags: ['数据看板', 'AIGC', '指标体系'], caseId: 'case-meituan-dashboard' },
+      { name: 'AI图文生产链路优化', detail: '通过数据归因定位"图文相关性"为核心折损点，参与设计结构化Prompt模板和多模态前置过滤方案', tags: ['AI产品', 'Prompt工程', '内容链路'], caseId: 'case-meituan-aigc' },
+      { name: '内容审核策略优化', detail: '设计分层审核策略，按行业和作者等级差异化"先发后审"，低质内容入库率下降10%，可用率上升2%', tags: ['策略产品', '风控', '审核'], caseId: 'case-meituan-review' },
+    ],
+  },
+  {
+    company: '快手',
+    period: '2024.09 - 2025.02',
+    role: '数据产品实习生',
+    department: '商业化',
+    tags: ['数据产品', 'RAG', '智能客服', '广告工具'],
+    description: '广告收入分析 + 智能客服RAG产品迭代',
+    photo: '/assets/photo-intern-kuaishou.jpg',
+    highlight: true,
+    projects: [
+      { name: '智能客服RAG知识库', detail: '独立负责RAG知识库构建与检索优化，设计递归下钻入库方案，知识库从200篇扩展至700+篇，有效回复率+2pp，转人工率-8pp', tags: ['RAG', '智能客服', 'PRD'], caseId: 'case-kuaishou-rag' },
+      { name: '广告医生-收入分析', detail: '从流量×转化率×单价拆解广告收入，设计第一性原则分析框架，覆盖账户/计划/素材/系统链路层', tags: ['商业分析', '广告收入', '数据产品'], caseId: 'case-kuaishou-ad' },
+    ],
+  },
+]
+
+export const mockProductCases: ProductCase[] = [
+  {
+    id: 'case-bytedance-ai',
+    name: 'AI问数/业绩追踪',
+    company: '字节跳动',
+    tag: 'AI产品',
+    stars: 5,
+    icon: '🤖',
+    desc: '"看数→AI解读→AI业绩报告"的业绩分析能力，帮小二快速锁定缺口',
+    background: '3个核心数据产品（工作台/大屏/全景）提供的是"看板+自助报表"模式，用户需手动筛选时间、维度、指标，逐层下钻才能定位问题，路径长、门槛高；管理者需主动巡视数据，发现异常后再手动拉群沟通，响应滞后。',
+    solution: [
+      '提供"看数（指标卡）→ AI解读（一句话结论+风险TOP3商家）→ AI业绩报告（看达成、拆风险商家、多轮对话追问）"的业绩分析能力',
+      '5月项目调研，明确接入方式与用户需求；6月内部功能自建，产研对齐分工',
+      '7月收集用户反馈进行模型调优，输出需求目标demo',
+      '独立完成调研+Skill链路梳理+PRD展示形式与功能逻辑确认',
+    ],
+    results: [
+      { label: '提效', value: '省15min/次' },
+      { label: '准确率', value: '87.3%' },
+      { label: '响应时长', value: '300s' },
+    ],
+    insights: '本期业绩分析思路及产品能力较简单，Q2需结合用户反馈进一步优化分析思路，支持复制、导出飞书文档等能力。',
+    tags: ['AI产品', '业绩分析', '广告收入', 'PRD'],
+  },
+  {
+    id: 'case-bytedance-data',
+    name: '达人数据安全管控系统',
+    company: '字节跳动',
+    tag: '数据产品',
+    stars: 5,
+    icon: '🔐',
+    desc: '4类角色权限边界+4项核心机制，高敏数据全链路治理闭环',
+    background: '直播工作台、直播大屏、直播全景3个核心数据产品中，头部达人数据缺乏精细化管理，L3/L4级数据被外包/实习生查看的次数是"黑盒账"。',
+    solution: [
+      '对接主控部门，定义实习生/外包、销售、运营、超管4类角色的数据可见范围与操作权限',
+      '对接安全部门和达运部门，梳理核心指标清单，与安全侧对齐GMV及交叉维度的数据等级',
+      '设计PC/移动端差异化展示方案，推动下载侧埋点、脱敏按钮埋点',
+      '协同安全侧制定预警频次策略，设定"超部门8分位查看次数自动上报LD"的熔断机制',
+    ],
+    results: [
+      { label: '加敏覆盖率', value: '100%' },
+      { label: '权限回收准确率', value: '90%+' },
+      { label: '618数据泄露', value: '0' },
+      { label: '覆盖场景', value: '6大核心' },
+    ],
+    insights: '在合规与业务效率之间找到最小摩擦路径——先诊断真实风险，再做精细化分级策略。"先统一口径、再分头落地"比"让各方各自对齐"效率高得多。',
+    tags: ['数据产品', 'CRM', '数据安全', '权限治理'],
+  },
+  {
+    id: 'case-bytedance-live',
+    name: '核心作者实时开播盯盘',
+    company: '字节跳动',
+    tag: '产品迭代',
+    stars: 4,
+    icon: '📡',
+    desc: '618大促自动分组+核心过程指标+下载能力，节省行业人力170小时/日',
+    background: '大促期间，行业需对核心作者的开播情况及投流表现进行实时、准确监控，以追进GMV达成。',
+    solution: [
+      '基于商达3.0关系，为小二、POC、负责人自动创建"核心作者"分组',
+      '新增开播时长、livehead投广消耗及占比指标，支持列表数据下载',
+      '推动团队优先保P0：先上线自动分组+核心过程指标+下载能力',
+      '对依赖口径尚未完全收敛的成交指标、赛道联动展示等做收敛或延后',
+    ],
+    results: [
+      { label: '节省人力', value: '170h/日' },
+      { label: '运营人数', value: '1400+' },
+      { label: '广告使用率', value: '+0.5pp' },
+    ],
+    insights: '在推进过程中识别到：对于大促前的业务场景，最核心的问题是"先让业务看清核心作者有没有开播"，而不是一开始就追求信息最全。',
+    tags: ['产品迭代', '大促保障', 'PRD'],
+  },
+  {
+    id: 'case-bytedance-ad',
+    name: '广告收入分析',
+    company: '字节跳动',
+    tag: '商业分析',
+    stars: 4,
+    icon: '📊',
+    desc: '1.5w字用户调研+多层级分析PRD，广告数据使用率提升5pp',
+    background: '广告收入归因缺乏系统化分析框架，运营需手动下钻多个维度才能定位收入波动根因。',
+    solution: [
+      '围绕广告收入归因输出1.5w字用户调研',
+      '设计三层归因框架：收入指标拆解→业务实体下钻→异常素材定位',
+      '第一层：GMV变化/消耗变化/ROI变化拆解',
+      '第二层：领导层(团队/商家/商品/达人)和小二层(账户/计划/素材)维度下钻',
+      '第三层：流量获取和成交归因（TR/ROI/CPM/五维四率/3M流量分析）',
+    ],
+    results: [
+      { label: '使用率提升', value: '+5pp' },
+      { label: '上线渗透率', value: '40%' },
+      { label: '调研报告', value: '1.5w字' },
+    ],
+    insights: '将广告收入归因从"手动下钻"升级为"系统化分析框架"，让销运从"找问题"转向"解决问题"。',
+    tags: ['商业分析', '广告收入', 'PRD', '用户调研'],
+  },
+  {
+    id: 'case-xiaomi-pay',
+    name: '抖音支付合作项目',
+    company: '小米',
+    tag: '商业化',
+    stars: 4,
+    icon: '💳',
+    desc: '接入抖音支付+立减活动，支付转化效率提升3%',
+    background: '小米运动健康App在会员订阅、权益购买等商业化场景中，支付环节是影响最终转化的关键节点。',
+    solution: [
+      '在支付落地页新增抖音支付入口，补充主流支付方式供给',
+      '承接抖音支付立减活动，放大优惠对支付决策的促进作用',
+      '设计入口位置、跳转逻辑及异常场景兜底策略',
+      '优化支付页对抖音支付立减活动的宣传方案，缩短用户理解成本',
+    ],
+    results: [
+      { label: '支付转化', value: '+3%' },
+      { label: '优惠点击率', value: '+10%+' },
+      { label: '支付能力', value: '+1渠道' },
+    ],
+    insights: '学会了把支付方式、活动信息和用户决策路径放在一起设计，而不是孤立看某个功能入口。',
+    tags: ['商业化', '支付链路', '增长', '外部合作'],
+  },
+  {
+    id: 'case-xiaomi-gift',
+    name: '亲友赠礼老带新活动',
+    company: '小米',
+    tag: '增长活动',
+    stars: 3,
+    icon: '🎁',
+    desc: '串联4个核心转化节点的社交裂变机制',
+    background: '小米运动健康App的会员及健康权益类产品增长，既依赖站内自然转化，也需要借助社交传播提高触达效率。',
+    solution: [
+      '设计"发起赠礼→分享触达→好友领取→权益到账"4个核心转化节点',
+      '优化发起赠礼入口、分享触达方式、领取承接页、状态流转与提示文案',
+      '梳理页面规则信息，降低用户理解门槛',
+      '协同设计、研发推进活动链路及状态细节确认',
+    ],
+    results: [
+      { label: '预计分享率', value: '+8%' },
+      { label: '新用户转化', value: '+5%' },
+      { label: '节点串联', value: '4个' },
+    ],
+    insights: '活动设计的重点不只是玩法本身，而是整条链路是否可理解、可分享、可转化。但整体营收无显著提升，成本收益不成正比。',
+    tags: ['增长活动', '社交裂变', '会员体系'],
+  },
+  {
+    id: 'case-xiaomi-audio',
+    name: '助眠音频内容引入',
+    company: '小米',
+    tag: '内容策略',
+    stars: 4,
+    icon: '🎵',
+    desc: '3阶段200首音频+"免费+VIP"分层模式',
+    background: '助眠场景既是高频健康服务场景，也是会员内容商业化的重要方向。现有内容供给的丰富度和体系化程度有限。',
+    solution: [
+      '完成竞品分析，拆解内容类型、免费/付费分层模式、内容组织方式',
+      '参与音频招标和供应商方案比选，评估价格、授权期限、质量和内容丰富度',
+      '设计3阶段共200首音频的内容引入方案',
+      '设计"免费体验+VIP内容承接"的分层策略',
+    ],
+    results: [
+      { label: '内容供给', value: '200首' },
+      { label: '使用时长', value: '+10%~15%' },
+      { label: '会员转化', value: '+3%~5%' },
+    ],
+    insights: '健康类产品里的内容能力，不只是服务用户体验，也是在建设会员价值和长期留存能力。',
+    tags: ['内容策略', '会员体系', '竞品分析'],
+  },
+  {
+    id: 'case-xiaomi-member',
+    name: '会员体系竞品分析',
+    company: '小米',
+    tag: '竞品分析',
+    stars: 4,
+    icon: '📋',
+    desc: '81989份问卷数据驱动的会员权益方向确定',
+    background: '小米运动健康App会员体系需要明确核心权益方向，缺乏系统性的用户需求数据支撑。',
+    solution: [
+      '基于81989份有效问卷数据进行用户画像和功能诉求分析',
+      '发现用户最关注健康（77.5%）和专注（61.4%）两大功能',
+      '识别睡眠（61.4%）和白噪音（61.4%）为二级功能绝对高点',
+      '为会员核心权益指明方向',
+    ],
+    results: [
+      { label: '问卷样本', value: '81989份' },
+      { label: '健康关注度', value: '77.5%' },
+      { label: '睡眠关注度', value: '61.4%' },
+    ],
+    insights: '用户调研不是简单的数据统计，而是从数据中找到产品方向的关键信号。',
+    tags: ['竞品分析', '会员体系', '用户调研'],
+  },
+  {
+    id: 'case-meituan-dashboard',
+    name: 'AIGC数据折损看板',
+    company: '美团',
+    tag: '数据看板',
+    stars: 5,
+    icon: '📈',
+    desc: '从0到1搭建5核心指标+2漏斗视图，结束团队"盲跑"',
+    background: 'AIGC图文生产管线已上线但完全没有数据监控。生产了多少、卡在哪个环节、生成的到底能不能用，没人说得清。整个团队都在"盲跑"。',
+    solution: [
+      '牵头设计AIGC数据折损看板，与数仓、算法、运营三方对齐',
+      '定义5个核心指标：圈选DEAL量→用于模型生产的DEAL量→模型产出内容量→DEAL对应可用内容量→DEAL可用率',
+      '设计管理层视图（看DEAL可用率和总体产出量）',
+      '设计执行层视图（看各环节折损量，如内容理解、审核环节折损）',
+    ],
+    results: [
+      { label: '指标定义', value: '5个核心' },
+      { label: '漏斗视图', value: '2个层级' },
+      { label: '团队状态', value: '从盲跑到可度量' },
+    ],
+    insights: '最难的不是搭表，而是定义指标口径。需要和数仓、算法、运营三方对齐每个指标的业务含义和计算逻辑。',
+    tags: ['数据看板', 'AIGC', '指标体系', '数据基建'],
+  },
+  {
+    id: 'case-meituan-aigc',
+    name: 'AI图文生产链路优化',
+    company: '美团',
+    tag: 'AI产品',
+    stars: 5,
+    icon: '🎨',
+    desc: '结构化Prompt+多模态前置过滤，可用率41%→76%',
+    background: 'AIGC管线图文相关性是最大折损点，到综行业DEAL可用率仅23%。大量低质图片被送进大模型，跑了之后被拦截，浪费推理资源。',
+    solution: [
+      '输入侧：设计多模态质量预判，低于阈值的图片直接走兜底模板生成或丢弃',
+      '生成侧：设计结构化Prompt模板，拆分为商品类目/核心卖点/视觉风格/禁用词汇4个模块',
+      '要求模型按固定JSON格式输出，设计JSON Schema和变量插槽',
+      '迭代两轮：V1全信息塞入→V2分层设计（固定约束与动态内容分离）',
+    ],
+    results: [
+      { label: '到餐可用率', value: '41%→76%' },
+      { label: '到综可用率', value: '23%→65%' },
+      { label: '内容覆盖率', value: '35%→80%+' },
+      { label: '可分发量', value: '4万→13万' },
+    ],
+    insights: '不是写Prompt文案，而是设计Prompt的产品架构。不同行业的视觉逻辑差异大，共用一套架构虽通用但不够极致。',
+    tags: ['AI产品', 'Prompt工程', 'AIGC', '内容链路'],
+  },
+  {
+    id: 'case-meituan-review',
+    name: '内容审核策略优化',
+    company: '美团',
+    tag: '策略产品',
+    stars: 4,
+    icon: '🛡️',
+    desc: '分层审核策略+全链路风控闭环，低质内容入库率-10%',
+    background: '低质内容入库率在某些作者分层中偏高，管线新增任务在作者低质监控中没有覆盖，导致"可用率"表面正常但下游投诉偏高。',
+    solution: [
+      '梳理内容路径：初审→复审→举报回扫→入库，逐段看触发惩罚的节点',
+      '识别未覆盖环节：M22生态机审复审未纳入惩罚链路、C端举报回扫后置',
+      '新增三大覆盖范围：M22初审、M22复审（新增覆盖）、C端举报回扫（新增补偿机制）',
+      '以"是否触发风控决策服务"作为唯一标准',
+    ],
+    results: [
+      { label: '入库率', value: '-10%' },
+      { label: '可用率', value: '+2%' },
+      { label: '覆盖链路', value: '全链路' },
+    ],
+    insights: '低质作者识别优化不是简单加规则，而是确保每个审核环节都接入同一套风控决策服务。',
+    tags: ['策略产品', '风控', '审核', '内容安全'],
+  },
+  {
+    id: 'case-kuaishou-rag',
+    name: '智能客服RAG知识库',
+    company: '快手',
+    tag: 'AI产品',
+    stars: 5,
+    icon: '💬',
+    desc: '独立负责RAG知识库200→700+篇，转人工率-8pp',
+    background: '销帮帮（内部销售智能问答产品）知识库只有200篇文档，转人工率偏高。60%检索失败因嵌套引用→子文档未入库。',
+    solution: [
+      'PRD①：设计递归下钻入库流程，自动识别文档引用关系，拉取嵌套子文档，深度限制3层',
+      'PRD②：设计多路召回架构（稀疏检索BM25+稠密检索向量+业务权重插件），按问题类型动态调整知识库权重',
+      'PRD③：设计冲突检测与版本仲裁模块，时效性排序+内容比对，矛盾时展示"以最新版本为准"+原文链接',
+      '独立输出3篇PRD，从知识下钻到多路召回到冲突检测',
+    ],
+    results: [
+      { label: '有效回复率', value: '+2pp' },
+      { label: '转人工率', value: '-8pp' },
+      { label: '知识库', value: '200→700+篇' },
+      { label: '销售覆盖率', value: '42.8%' },
+    ],
+    insights: 'mentor给了方向和资源支持，但整个需求定义、方案设计、落地推进是独立完成的。最大的收获是从"发现问题"到"系统性解决问题"的思维跃迁。',
+    tags: ['RAG', '智能客服', 'PRD', '知识库', 'NLP'],
+  },
+  {
+    id: 'case-kuaishou-ad',
+    name: '广告医生-收入分析',
+    company: '快手',
+    tag: '商业分析',
+    stars: 4,
+    icon: '🔍',
+    desc: '第一性原则拆解广告收入分析框架',
+    background: '广告收入分析缺乏系统化框架，运营需从多个维度手动排查才能定位问题。',
+    solution: [
+      '广告收入（GMV）= 流量 × 转化率 × 单价（eCPM/CVR/出价）',
+      '结果层：看指标变化趋势',
+      '对象层：账户层（行业/头部/新老）、计划层（数量/策略）、素材层（总量/质量）',
+      '系统链路层：召回（曝光）→粗排（CTR预估分）→精排→出价',
+    ],
+    results: [
+      { label: '分析维度', value: '3层' },
+      { label: '覆盖对象', value: '账户/计划/素材' },
+      { label: '框架', value: '第一性原则' },
+    ],
+    insights: '从设计流量的链路出发，用第一性原则拆解广告收入的每个环节。',
+    tags: ['商业分析', '广告收入', '数据产品'],
+  },
+]
+
+export const mockExperienceLibrary: ExperienceItem[] = [
+  // Business Analysis tag
+  { id: 'exp-1', company: '字节跳动', project: '广告收入分析', role: '数据产品实习生', tag: '商业分析', brief: '1.5w字用户调研+多层级广告收入归因PRD', caseId: 'case-bytedance-ad' },
+  { id: 'exp-2', company: '快手', project: '广告医生-收入分析', role: '数据产品实习生', tag: '商业分析', brief: '第一性原则拆解广告收入分析框架', caseId: 'case-kuaishou-ad' },
+  { id: 'exp-3', company: '民生证券', project: '天宇股份覆盖报告', role: '行研实习生', tag: '商业分析', brief: '医药行业首次覆盖报告+专家访谈' },
+  // Product Design tag
+  { id: 'exp-4', company: '快手', project: '智能客服RAG知识库', role: '数据产品实习生', tag: '产品迭代', brief: '独立负责RAG知识库构建与3篇PRD', caseId: 'case-kuaishou-rag' },
+  { id: 'exp-5', company: '字节跳动', project: '核心作者实时开播盯盘', role: '数据产品实习生', tag: '产品迭代', brief: '618大促自动分组+核心指标+下载能力', caseId: 'case-bytedance-live' },
+  // AI tag
+  { id: 'exp-6', company: '字节跳动', project: 'AI问数/业绩追踪', role: '数据产品实习生', tag: 'AI产品', brief: '看数→AI解读→AI业绩报告能力', caseId: 'case-bytedance-ai' },
+  { id: 'exp-7', company: '美团', project: 'AI图文生产链路优化', role: '策略产品实习生', tag: 'AI产品', brief: '结构化Prompt+多模态前置过滤', caseId: 'case-meituan-aigc' },
+  { id: 'exp-8', company: '美团', project: 'AIGC数据折损看板', role: '策略产品实习生', tag: 'AI产品', brief: '从0到1搭建5核心指标+2漏斗视图', caseId: 'case-meituan-dashboard' },
+  // Data tag
+  { id: 'exp-9', company: '字节跳动', project: '达人数据安全管控', role: '数据产品实习生', tag: '数据产品', brief: '4类角色权限+4项核心机制全链路治理', caseId: 'case-bytedance-data' },
+  { id: 'exp-10', company: '美团', project: '内容审核策略优化', role: '策略产品实习生', tag: '策略产品', brief: '分层审核策略+全链路风控闭环', caseId: 'case-meituan-review' },
+  // Commercial tag
+  { id: 'exp-11', company: '小米', project: '抖音支付合作项目', role: '商业化实习生', tag: '商业化', brief: '接入抖音支付+立减活动', caseId: 'case-xiaomi-pay' },
+  { id: 'exp-12', company: '小米', project: '亲友赠礼老带新活动', role: '商业化实习生', tag: '商业化', brief: '4个核心转化节点社交裂变', caseId: 'case-xiaomi-gift' },
+  { id: 'exp-13', company: '小米', project: '助眠音频内容引入', role: '商业化实习生', tag: '商业化', brief: '3阶段200首音频+免费+VIP分层', caseId: 'case-xiaomi-audio' },
+  { id: 'exp-14', company: '小米', project: '会员体系竞品分析', role: '商业化实习生', tag: '竞品分析', brief: '81989份问卷数据驱动', caseId: 'case-xiaomi-member' },
+]
+
+export const mockAwards = [
+  { name: 'APMCM亚太地区数学建模竞赛', level: '全国一等奖', year: '2024', category: '竞赛' },
+  { name: '挑战杯大学生学术科技作品竞赛', level: '省级银奖', year: '2024', category: '竞赛' },
+  { name: '全国大学生数学建模竞赛', level: '省级二等奖', year: '2023', category: '竞赛' },
+  { name: '美国大学生数学建模竞赛(MCM)', level: 'H奖', year: '2024', category: '竞赛' },
+  { name: '全国大学生英语竞赛(NECCS)', level: '三等奖', year: '2023', category: '语言' },
+  { name: '校级一等奖学金', level: '一等奖', year: '2022-2023', category: '奖学金' },
+  { name: '校级三好学生', level: '校级', year: '2023', category: '荣誉' },
+  { name: '保险学院演讲比赛', level: '一等奖', year: '2023', category: '演讲' },
+  { name: '迎新晚会主持', level: '主持人', year: '2023', category: '舞台' },
+  { name: '校园健美操比赛', level: '参赛', year: '2022', category: '舞台' },
+]
+
+export const mockHobbies = [
+  { name: '洞穴探险', icon: '🦇', desc: '探索未知的地下世界', photo: '/assets/photo-hobby-cave.jpg' },
+  { name: '雨林徒步', icon: '🌿', desc: '穿行原始雨林感受自然', photo: '/assets/photo-hobby-rainforest.jpg' },
+  { name: '滑雪', icon: '⛷️', desc: '冬季速度与激情', photo: '/assets/photo-hobby-skiing.jpg' },
+  { name: '潜水', icon: '🤿', desc: 'OW开放水域潜水证书', photo: '/assets/photo-hobby-diving.jpg' },
+]
+
+export const mockEducation = [
+  {
+    school: '中央财经大学',
+    degree: '保险硕士',
+    period: '2024 - 2026',
+    detail: '专业排名4/51 | 中共党员',
+    highlight: true,
+  },
+  {
+    school: '山东财经大学',
+    degree: '保险学本科',
+    period: '2020 - 2024',
+    detail: '专业排名第1 | 推免至中央财经大学',
+    highlight: false,
+  },
+  {
+    school: '西南财经大学',
+    degree: '交流学习',
+    period: '2023',
+    detail: '校际交流项目',
+    highlight: false,
+  },
+]
+
+export const mockCertificates = [
+  { name: 'CET-4', score: '600', category: '英语' },
+  { name: 'CET-6', score: '590', category: '英语' },
+  { name: '雅思IELTS', score: '6.5', category: '英语' },
+  { name: 'OW潜水证', score: 'Open Water', category: '技能' },
+]
+
+export const mockCampus = [
+  { role: '保险学院学生会权益部部长', period: '2022-2023', desc: '组织学生权益活动与提案收集' },
+  { role: '齐鲁情支农促进会副会长', period: '2021-2022', desc: '组织支农调研与社会实践' },
+  { role: '班级组织委员', period: '2020-2022', desc: '班级活动组织与团建策划' },
+]
