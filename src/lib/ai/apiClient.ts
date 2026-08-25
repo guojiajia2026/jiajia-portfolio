@@ -78,7 +78,7 @@ export async function chatWithAI(
   } catch (error) {
     console.error('Chat API error:', error)
     // Fallback to mock response
-    return getMockReply(messages[messages.length - 1]?.content || '')
+    return getMockReply()
   }
 }
 
@@ -108,7 +108,7 @@ export async function matchJob(
 }
 
 // Mock回复（API不可用时的降级方案）
-function getMockReply(question: string): string {
+function getMockReply(): string {
   const replies = [
     '关于这个问题，我可以从我的经历来回答～我在4段大厂实习中积累了AI产品、商业化、数据分析等多方面的经验。你想了解具体哪个方面呢？💕',
     '这是个好问题！我从金融研究出发，逐步探索到AI产品方向。我的核心优势是商业分析能力+AI产品经验的结合，具体可以参考我在字节和美团的AI项目经历~',

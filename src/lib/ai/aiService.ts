@@ -24,9 +24,9 @@ export interface MatchResult {
   elevatorPitch: string
 }
 
-const API_KEY = process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY || ''
-const BASE_URL = process.env.AI_BASE_URL || 'https://api.deepseek.com/v1'
-const MODEL = process.env.AI_MODEL || 'deepseek-chat'
+const API_KEY = (typeof import.meta !== 'undefined' && import.meta.env?.DEEPSEEK_API_KEY) || ''
+const BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.AI_BASE_URL) || 'https://api.deepseek.com/v1'
+const MODEL = (typeof import.meta !== 'undefined' && import.meta.env?.AI_MODEL) || 'deepseek-chat'
 
 const hasAIKey = !!API_KEY
 
