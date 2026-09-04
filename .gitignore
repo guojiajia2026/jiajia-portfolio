@@ -47,3 +47,5 @@ deploy.bat
 one-line-deploy.bat
 download-tools.bat
 upload-to-github.js
+.vercel
+.env*
