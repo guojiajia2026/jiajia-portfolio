@@ -57,31 +57,51 @@ function tokenize(text) {
   return tokens
 }
 
+// 公司名别名映射 → category
+const COMPANY_ALIASES = {
+  '小米': 'xiaomi', 'xiaomi': 'xiaomi', '红米': 'xiaomi',
+  '字节': 'bytedance', 'bytedance': 'bytedance', '字节跳动': 'bytedance', '抖音': 'bytedance', 'tiktok': 'bytedance',
+  '美团': 'meituan', 'meituan': 'meituan',
+  '快手': 'kuaishou', 'kuaishou': 'kuaishou',
+}
+
 function retrieve(query, topK) {
   topK = topK || 5
+  const queryLower = query.toLowerCase()
   const queryTokens = tokenize(query)
   const scores = []
-  
-  // 简化版BM25 + tag boost
+
+  // 公司名直接匹配：用户提到公司名时，直接拉取该公司全部知识块
+  const matchedCategories = new Set()
+  for (const [alias, cat] of Object.entries(COMPANY_ALIASES)) {
+    if (queryLower.includes(alias.toLowerCase())) {
+      matchedCategories.add(cat)
+    }
+  }
+
   CHUNKS.forEach((chunk, idx) => {
     let score = 0
     const chunkText = chunk.content + ' ' + chunk.tags.join(' ')
     const chunkTokens = tokenize(chunkText)
     const chunkTokenSet = new Set(chunkTokens)
-    
+
+    // 公司名直接匹配 → 大幅加分
+    if (matchedCategories.has(chunk.category)) {
+      score += 20
+    }
+
     // 词汇匹配
     queryTokens.forEach(token => {
       if (chunkTokenSet.has(token)) {
         score += 1
       }
     })
-    
+
     // Tag直接匹配加分
     chunk.tags.forEach(tag => {
       if (query.includes(tag) || tag.includes(query)) {
         score += 5
       }
-      // 部分匹配
       const tagChars = tag.split('')
       let matchCount = 0
       tagChars.forEach(ch => {
@@ -91,19 +111,34 @@ function retrieve(query, topK) {
         score += 2
       }
     })
-    
+
     // Category匹配
-    if (query.toLowerCase().includes(chunk.category)) {
+    if (queryLower.includes(chunk.category)) {
       score += 3
     }
-    
+
     if (score > 0) {
       scores.push({ chunk, score, idx })
     }
   })
-  
+
   scores.sort((a, b) => b.score - a.score)
-  return scores.slice(0, topK).map(s => s.chunk)
+  let results = scores.slice(0, topK).map(s => s.chunk)
+
+  // 如果匹配到公司名，确保该公司所有块都包含
+  if (matchedCategories.size > 0) {
+    const existingIds = new Set(results.map(r => r.id))
+    for (const cat of matchedCategories) {
+      CHUNKS.forEach(chunk => {
+        if (chunk.category === cat && !existingIds.has(chunk.id)) {
+          results.push(chunk)
+          existingIds.add(chunk.id)
+        }
+      })
+    }
+  }
+
+  return results
 }
 
 // ===== 构建RAG系统Prompt =====
